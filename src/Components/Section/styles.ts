@@ -1,12 +1,10 @@
 import styled from 'styled-components'
 
-import { ProductListProps } from '.'
+import { SectionProps } from '.'
 import { Cores } from '../../styles'
 import { Card } from '../Product/styles'
 
-export const Container = styled.section<
-    Omit<ProductListProps, 'title' | 'games'>
->`
+export const Container = styled.section<Omit<SectionProps, 'title' | 'games'>>`
     padding: 32px 0;
     background-color: ${(props) =>
         props.background == 'black' ? Cores.preto : Cores.cinza};
@@ -15,14 +13,15 @@ export const Container = styled.section<
         background-color: ${(props) =>
             props.background == 'black' ? Cores.cinza : Cores.preto};
     }
-`
-export const List = styled.ul`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 24px;
-    margin-top: 40px;
+
+    p {
+        font-size: 14px;
+        line-height: 22px;
+        max-width: 640px;
+    }
 `
 export const Title = styled.h2`
     font-weight: bold;
     font-size: 18px;
+    margin-bottom: 40px;
 `

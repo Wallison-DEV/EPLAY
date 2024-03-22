@@ -1,101 +1,60 @@
+import { useEffect, useState } from 'react'
+
 import Banner from '../../Components/Banner'
 import ProductList from '../../Components/ProductList'
-import Game from '../../models/Game'
 
-import resident from '../../assets/images/resident.png'
-import diablo from '../../assets/images/diablo.png'
-import starWars from '../../assets/images/star_wars.png'
-import zelda from '../../assets/images/zelda.png'
+export interface GalleryItemProps {
+    type: 'image' | 'video'
+    url: string
+}
 
-const Promoções: Game[] = [
-    {
-        id: 1,
-        title: 'Resident Evil 4',
-        category: 'Ação',
-        system: 'PC',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror e tiro em terceira pessoa desenvolvido e publicado pela Capcom, lançado originalmente para o GameCube em 2005. É o sexto jogo principal da franquia Resident Evil.',
-        infos: ['25%', 'R$126,75'],
-        image: resident,
-    },
-    {
-        id: 2,
-        title: 'Diablo 4',
-        category: 'RPG',
-        system: 'PC',
-        description:
-            'A batalha interminável entre o Paraíso Celestial e o Inferno Ardente continua, e o caos ameaça consumir Santuário. Com inúmeros demônios para matar, muitas habilidades para dominar, masmorras horripilantes e tesouros lendários, este vasto mundo aberto traz a promessa de aventura e devastação.',
-        infos: ['50%', 'R$174,95'],
-        image: diablo,
-    },
-    {
-        id: 3,
-        title: 'Star Wars',
-        category: 'Ação',
-        system: 'PS5',
-        description:
-            'STAR WARS Jedi: Survivor é uma história sombria ambientada em um universo que traz o seu melhor quando a dor e a perda estão no centro das emoções. Cinco anos após o jogo antecessor, STAR WARS Jedi: Fallen Order, essa sequência mostra Cal Kestis abandonado por sua tripulação anterior.',
-        infos: ['55%', 'R$134,55'],
-        image: starWars,
-    },
-    {
-        id: 4,
-        title: 'Zelda',
-        category: 'Aventura',
-        system: 'PS5',
-        description:
-            'The Legend of Zelda: Tears of the Kingdom é um jogo onde jogador controla Link enquanto ele procura pela Princesa Zelda e luta para evitar que Ganondorf destrua Hyrule ',
-        infos: ['20%', 'R$289,00'],
-        image: zelda,
-    },
-]
-const EmBreve: Game[] = [
-    {
-        id: 5,
-        title: 'Diablo 4',
-        category: 'RPG',
-        system: 'PC',
-        description:
-            'A batalha interminável entre o Paraíso Celestial e o Inferno Ardente continua, e o caos ameaça consumir Santuário. Com inúmeros demônios para matar, muitas habilidades para dominar, masmorras horripilantes e tesouros lendários, este vasto mundo aberto traz a promessa de aventura e devastação.',
-        infos: ['50%', 'R$174,95'],
-        image: diablo,
-    },
-    {
-        id: 6,
-        title: 'Zelda',
-        category: 'Aventura',
-        system: 'PS5',
-        description:
-            'The Legend of Zelda: Tears of the Kingdom é um jogo onde jogador controla Link enquanto ele procura pela Princesa Zelda e luta para evitar que Ganondorf destrua Hyrule ',
-        infos: ['20%', 'R$289,00'],
-        image: zelda,
-    },
-    {
-        id: 7,
-        title: 'Star Wars',
-        category: 'Ação',
-        system: 'PS5',
-        description:
-            'STAR WARS Jedi: Survivor é uma história sombria ambientada em um universo que traz o seu melhor quando a dor e a perda estão no centro das emoções. Cinco anos após o jogo antecessor, STAR WARS Jedi: Fallen Order, essa sequência mostra Cal Kestis abandonado por sua tripulação anterior.',
-        infos: ['55%', 'R$134,55'],
-        image: starWars,
-    },
-    {
-        id: 8,
-        title: 'Resident Evil 4',
-        category: 'Ação',
-        system: 'PC',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror e tiro em terceira pessoa desenvolvido e publicado pela Capcom, lançado originalmente para o GameCube em 2005. É o sexto jogo principal da franquia Resident Evil.',
-        infos: ['25%', 'R$126,75'],
-        image: resident,
-    },
-]
+export type Game = {
+    id: number
+    name: string
+    description: string
+    release_date?: string
+    prices: {
+        discount?: number
+        old?: number
+        current: number
+    }
+    details: {
+        category: string
+        system: string
+        developer: string
+        publisher: string
+        languages: string[]
+    }
+    media: {
+        thumbnail: string
+        cover: string
+        gallery: GalleryItemProps[]
+    }
+}
 
-export const Home = () => (
-    <>
-        <Banner />
-        <ProductList title="Promoções" background="gray" games={Promoções} />
-        <ProductList title="Em breve" background="black" games={EmBreve} />
-    </>
-)
+export const Home = () => {
+    const [promocoes, setPromocoes] = useState<Game[]>([])
+    const [emBreve, setEmBreve] = useState<Game[]>([])
+
+    useEffect(() => {
+        fetch('https://fake-api-tau.vercel.app/api/eplay/promocoes')
+            .then((res) => res.json())
+            .then((res) => setPromocoes(res))
+    }, [])
+    useEffect(() => {
+        fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
+            .then((res) => res.json())
+            .then((res) => setEmBreve(res))
+    }, [])
+    return (
+        <>
+            <Banner />
+            <ProductList
+                title="Promoções"
+                background="gray"
+                games={promocoes}
+            />
+            <ProductList title="Em breve" background="black" games={emBreve} />
+        </>
+    )
+}
