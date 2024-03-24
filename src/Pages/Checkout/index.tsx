@@ -46,28 +46,28 @@ const Checkout = () => {
                 .oneOf([Yup.ref('deliveryEmail')], 'Os e-mails são diferentes')
                 .required('O campo é obrigatório'),
 
-            cardOwner: Yup.string().when((values, schema) =>
+            cardOwner: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            cpfCardOwner: Yup.string().when((values, schema) =>
+            cpfCardOwner: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            cardDisplayName: Yup.string().when((values, schema) =>
+            cardDisplayName: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            cardNumber: Yup.string().when((values, schema) =>
+            cardNumber: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            expiresYear: Yup.string().when((values, schema) =>
+            expiresYear: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            expiresMonth: Yup.string().when((values, schema) =>
+            expiresMonth: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            cardCode: Yup.string().when((values, schema) =>
+            cardCode: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
-            installments: Yup.string().when((values, schema) =>
+            installments: Yup.string().when((_values, schema) =>
                 payWithCard ? schema.required('O campo é obrigatório') : schema
             ),
         }),
