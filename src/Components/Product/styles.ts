@@ -11,11 +11,14 @@ export const Card = styled(Link)`
     text-decoration: none;
     color: ${Cores.branca};
     display: block;
+    width: 238px;
+    height: 420px;
 
     img {
         display: block;
         width: 100%;
         height: 250px;
+        width: 222px;
         object-fit: cover;
     }
 

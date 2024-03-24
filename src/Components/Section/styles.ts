@@ -21,7 +21,7 @@ export const Container = styled.section<Omit<SectionProps, 'title' | 'games'>>`
     }
 `
 export const Title = styled.h2`
-    font-weight: bold;
+    font-weight: 700;
     font-size: 18px;
     margin-bottom: 40px;
 `

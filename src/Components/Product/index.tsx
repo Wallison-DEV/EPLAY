@@ -21,10 +21,16 @@ const Product = ({
     id,
 }: ProductProps) => {
     const getDescricao = (descricao: string) => {
-        if (descricao.length > 95) {
-            return descricao.slice(0, 95) + '...'
+        if (descricao.length > 92) {
+            return descricao.slice(0, 80) + '...'
         }
         return descricao
+    }
+    const getTitulo = (title: string) => {
+        if (title.length > 24) {
+            return title.slice(0, 24) + '...'
+        }
+        return title
     }
     return (
         <Card to={`/product/${id}`}>
@@ -34,7 +40,7 @@ const Product = ({
                     <Tag key={info}>{info}</Tag>
                 ))}
             </Infos>
-            <Titulo>{title}</Titulo>
+            <Titulo>{getTitulo(title)}</Titulo>
             <Tag>{category}</Tag>
             <Tag>{system}</Tag>
             <Descricao>{getDescricao(description)}</Descricao>

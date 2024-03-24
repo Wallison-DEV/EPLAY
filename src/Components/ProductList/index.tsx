@@ -6,6 +6,7 @@ export type ProductListProps = {
     title: string
     background: 'gray' | 'black'
     games: Game[]
+    id?: string
 }
 export const formataPreco = (preco = 0) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -13,7 +14,7 @@ export const formataPreco = (preco = 0) => {
         currency: 'BRL',
     }).format(preco)
 }
-const ProductList = ({ background, title, games }: ProductListProps) => {
+const ProductList = ({ background, title, games, id }: ProductListProps) => {
     const getGameTags = (game: Game) => {
         const tags = []
 
@@ -30,7 +31,7 @@ const ProductList = ({ background, title, games }: ProductListProps) => {
     }
 
     return (
-        <Container background={background}>
+        <Container id={id} background={background}>
             <div className="container">
                 <Title>{title}</Title>
                 <List>
