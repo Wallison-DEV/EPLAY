@@ -1,26 +1,25 @@
 import { useState } from 'react'
 
 import Section from '../Section'
-import { Action, Item, Items, Modal, ModalContent } from './styles'
+
+import * as S from './styles'
 
 import zoomIcon from '../../assets/icons/mais-zoom.png'
 import playIcon from '../../assets/icons/botao-play.png'
 import closeIcon from '../../assets/icons/close.png'
 
-import { GalleryItemProps } from '../../Pages/Home'
 type GalleryProps = {
     defaultCover: string
     name: string
     items: GalleryItemProps[]
 }
-
 interface ModalState extends GalleryItemProps {
-    estaVisivel: boolean
+    isVisible: boolean
 }
 
 const Gallery = ({ defaultCover, name, items }: GalleryProps) => {
     const [modal, setModal] = useState<ModalState>({
-        estaVisivel: false,
+        isVisible: false,
         type: 'image',
         url: '',
     })
@@ -36,7 +35,7 @@ const Gallery = ({ defaultCover, name, items }: GalleryProps) => {
 
     const closeModal = () => {
         setModal({
-            estaVisivel: false,
+            isVisible: false,
             type: 'image',
             url: '',
         })
@@ -45,13 +44,13 @@ const Gallery = ({ defaultCover, name, items }: GalleryProps) => {
     return (
         <>
             <Section title="Galeria" background="black">
-                <Items>
+                <S.Items>
                     {items.map((media, index) => (
-                        <Item
+                        <S.Item
                             key={media.url}
                             onClick={() => {
                                 setModal({
-                                    estaVisivel: true,
+                                    isVisible: true,
                                     type: media.type,
                                     url: media.url,
                                 })
@@ -61,20 +60,20 @@ const Gallery = ({ defaultCover, name, items }: GalleryProps) => {
                                 src={getMediaCover(media)}
                                 alt={`Mídia ${index + 1} de ${name}`}
                             />
-                            <Action>
+                            <S.Action>
                                 <img
                                     src={getMediaIcon(media)}
                                     alt="Clique para maximizar a mídia"
                                 />
-                            </Action>
-                        </Item>
+                            </S.Action>
+                        </S.Item>
                     ))}
-                </Items>
+                </S.Items>
             </Section>
-            <Modal className={modal.estaVisivel ? 'visivel' : ''}>
-                <ModalContent className="container">
+            <S.Modal className={modal.isVisible ? 'is-visible' : ''}>
+                <S.ModalContent className="container">
                     <header>
-                        <h4>${name}</h4>
+                        <h4>{name}</h4>
                         <img
                             src={closeIcon}
                             alt="Fechar"
@@ -86,9 +85,9 @@ const Gallery = ({ defaultCover, name, items }: GalleryProps) => {
                     ) : (
                         <iframe frameBorder={0} src={modal.url} />
                     )}
-                </ModalContent>
+                </S.ModalContent>
                 <div onClick={() => closeModal()} className="overlay"></div>
-            </Modal>
+            </S.Modal>
         </>
     )
 }

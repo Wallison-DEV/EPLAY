@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Cores } from '../../styles'
+import { Colors } from '../../styles'
 import { TagContainer } from '../Tag/styles'
 import { ButtonContainer, ButtonLink } from '../Button/styles'
 
@@ -32,7 +32,7 @@ export const CartContainer = styled.div`
 export const Sidebar = styled.aside`
     max-width: 360px;
     width: 100%;
-    background-color: ${Cores.cinza};
+    background-color: ${Colors.gray};
     z-index: 1;
     padding: 40px 16px 0;
 
@@ -44,37 +44,44 @@ export const Sidebar = styled.aside`
     ${ButtonLink} {
         margin-top: 0;
         border: none;
-        color: ${Cores.branca};
-        background-color: ${Cores.verde};
+        color: ${Colors.white};
+        background-color: ${Colors.green};
         font-size: 16px;
         font-weight: bold;
         padding: 8px 16px;
         margin-top: 16px;
         border-radius: 8px;
     }
+
+    .empty-text {
+        font-size: 14px;
+        line-height: 22px;
+        color: ${Colors.white};
+        text-align: center;
+    }
 `
 export const Prices = styled.p`
     font-weight: bold;
     font-size: 14px;
-    color: ${Cores.branca};
+    color: ${Colors.white};
     margin-bottom: 24px;
 
     span {
         display: block;
         font-size: 12px;
-        color: ${Cores.cinzaClaro};
+        color: ${Colors.lightGray};
     }
 `
 export const Quantity = styled.p`
     font-weight: bold;
     font-size: 16px;
-    color: ${Cores.branca};
+    color: ${Colors.white};
     margin: 32px 0 16px;
 `
 
 export const CartItem = styled.li`
     display: flex;
-    border-bottom: 1px solid ${Cores.cinzaClaro};
+    border-bottom: 1px solid ${Colors.lightGray};
     padding: 8px 0;
     position: relative;
 
@@ -86,13 +93,13 @@ export const CartItem = styled.li`
     }
 
     h3 {
-        color: ${Cores.branca}
+        color: ${Colors.white}
         font-size: 16px;
         font-weght: bold;
     }
     span {
         display: block;
-        color: ${Cores.branca}
+        color: ${Colors.white}
         font-size: 14px;
         font-weght: bold;
     }

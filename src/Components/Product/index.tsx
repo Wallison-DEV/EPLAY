@@ -1,5 +1,5 @@
 import Tag from '../Tag'
-import { Card, Descricao, Infos, Titulo } from './styles'
+import * as S from './styles'
 
 type ProductProps = {
     title: string
@@ -20,11 +20,11 @@ const Product = ({
     image,
     id,
 }: ProductProps) => {
-    const getDescricao = (descricao: string) => {
-        if (descricao.length > 92) {
-            return descricao.slice(0, 80) + '...'
+    const getDescricao = (text: string) => {
+        if (text.length > 92) {
+            return text.slice(0, 80) + '...'
         }
-        return descricao
+        return text
     }
     const getTitulo = (title: string) => {
         if (title.length > 24) {
@@ -33,18 +33,21 @@ const Product = ({
         return title
     }
     return (
-        <Card to={`/product/${id}`}>
+        <S.Card
+            title={`Clique aqui para ver mais detalhes do jogo: ${title}`}
+            to={`/product/${id}`}
+        >
             <img src={image} alt={title} />
-            <Infos>
+            <S.Infos>
                 {infos.map((info) => (
                     <Tag key={info}>{info}</Tag>
                 ))}
-            </Infos>
-            <Titulo>{getTitulo(title)}</Titulo>
+            </S.Infos>
+            <S.Title>{getTitulo(title)}</S.Title>
             <Tag>{category}</Tag>
             <Tag>{system}</Tag>
-            <Descricao>{getDescricao(description)}</Descricao>
-        </Card>
+            <S.Description>{getDescricao(description)}</S.Description>
+        </S.Card>
     )
 }
 

@@ -1,20 +1,25 @@
-import { Game } from '../../Pages/Home'
 import Product from '../Product'
-import { Container, List, Title } from './styles'
+
+import * as S from './styles'
+
+import { parseToBrl } from '../../utils/'
+import Loader from '../Loader'
 
 export type ProductListProps = {
     title: string
     background: 'gray' | 'black'
-    games: Game[]
+    games?: Game[]
     id?: string
+    isLoading: boolean
 }
-export const formataPreco = (preco = 0) => {
-    return new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    }).format(preco)
-}
-const ProductList = ({ background, title, games, id }: ProductListProps) => {
+
+const ProductList = ({
+    background,
+    title,
+    games,
+    id,
+    isLoading,
+}: ProductListProps) => {
     const getGameTags = (game: Game) => {
         const tags = []
 
@@ -25,32 +30,36 @@ const ProductList = ({ background, title, games, id }: ProductListProps) => {
             tags.push(`${game.prices.discount}%`)
         }
         if (game.prices.current) {
-            tags.push(formataPreco(game.prices.current))
+            tags.push(parseToBrl(game.prices.current))
         }
         return tags
     }
 
+    if (isLoading) {
+        return <Loader />
+    }
     return (
-        <Container id={id} background={background}>
+        <S.Container id={id} background={background}>
             <div className="container">
-                <Title>{title}</Title>
-                <List>
-                    {games.map((game) => (
-                        <li key={game.id}>
-                            <Product
-                                id={game.id}
-                                title={game.name}
-                                category={game.details.category}
-                                system={game.details.system}
-                                description={game.description}
-                                infos={getGameTags(game)}
-                                image={game.media.thumbnail}
-                            />
-                        </li>
-                    ))}
-                </List>
+                <S.Title>{title}</S.Title>
+                <S.List>
+                    {games &&
+                        games.map((game) => (
+                            <li key={game.id}>
+                                <Product
+                                    id={game.id}
+                                    title={game.name}
+                                    category={game.details.category}
+                                    system={game.details.system}
+                                    description={game.description}
+                                    infos={getGameTags(game)}
+                                    image={game.media.thumbnail}
+                                />
+                            </li>
+                        ))}
+                </S.List>
             </div>
-        </Container>
+        </S.Container>
     )
 }
 

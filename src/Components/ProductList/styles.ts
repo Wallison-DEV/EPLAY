@@ -1,19 +1,19 @@
 import styled from 'styled-components'
 
 import { ProductListProps } from '.'
-import { Cores, breakpoints } from '../../styles'
+import { Colors, breakpoints } from '../../styles'
 import { Card } from '../Product/styles'
 
 export const Container = styled.section<
-    Omit<ProductListProps, 'title' | 'games'>
+    Omit<ProductListProps, 'title' | 'games' | 'isLoading'>
 >`
     padding: 32px 0;
     background-color: ${(props) =>
-        props.background == 'black' ? Cores.preto : Cores.cinza};
+        props.background == 'black' ? Colors.black : Colors.gray};
 
     ${Card} {
         background-color: ${(props) =>
-            props.background == 'black' ? Cores.cinza : Cores.preto};
+            props.background == 'black' ? Colors.gray : Colors.black};
     }
 `
 export const List = styled.ul`
@@ -25,8 +25,11 @@ export const List = styled.ul`
     @media (max-width: ${breakpoints.desktop}) {
         grid-template-columns: 1fr 1fr;
     }
-    @media (max-width: ${breakpoints.tablet}) {
-        grid-template-columns: 1fr;
+    @media (max-width: 580px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 `
 export const Title = styled.h2`

@@ -2,11 +2,10 @@ import { useDispatch } from 'react-redux'
 
 import { add, open } from '../../store/reducers/cart'
 
-import { Banner, Infos } from './styles'
+import * as S from './styles'
 import Tag from '../../Components/Tag'
 import Button from '../Button'
-import { Game } from '../../Pages/Home'
-import { formataPreco } from '../ProductList'
+import { parseToBrl } from '../../utils/'
 
 type HeroProps = {
     game: Game
@@ -21,23 +20,22 @@ const Hero = ({ game }: HeroProps) => {
     }
 
     return (
-        <Banner style={{ backgroundImage: `url(${game.media.cover})` }}>
+        <S.Banner style={{ backgroundImage: `url(${game.media.cover})` }}>
             <div className="container">
                 <div>
                     <Tag>{game.details.category}</Tag>
                     <Tag>{game.details.system}</Tag>
                 </div>
-                <Infos>
+                <S.Infos>
                     <h2>{game.name}</h2>
                     <p>
                         {game.prices.discount && (
-                            <span>{formataPreco(game.prices.old)}</span>
+                            <span>{parseToBrl(game.prices.old)}</span>
                         )}
                     </p>
                     {game.prices.current ? (
                         <>
-                            {formataPreco(game.prices.current)}
-
+                            <span>{parseToBrl(game.prices.current)}</span>
                             <Button
                                 onClick={addToCart}
                                 variant="primary"
@@ -50,9 +48,9 @@ const Hero = ({ game }: HeroProps) => {
                     ) : (
                         <></>
                     )}
-                </Infos>
+                </S.Infos>
             </div>
-        </Banner>
+        </S.Banner>
     )
 }
 export default Hero

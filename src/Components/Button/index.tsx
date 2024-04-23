@@ -1,12 +1,13 @@
 import { ButtonContainer, ButtonLink } from './styles'
 
 export type ButtonProps = {
-    type: 'button' | 'link'
+    type: 'button' | 'link' | 'submit'
     title: string
     to?: string
     onClick?: () => void
     children: string
     variant?: 'primary' | 'secondary'
+    disabled?: boolean
 }
 
 const Button = ({
@@ -16,14 +17,21 @@ const Button = ({
     onClick,
     to,
     variant = 'primary',
+    disabled,
 }: ButtonProps) => {
-    if (type == 'button') {
+    const handleClick = () => {
+        if (onClick) {
+            onClick()
+        }
+    }
+    if (type === 'button' || type === 'submit') {
         return (
             <ButtonContainer
                 variant={variant}
-                type="button"
+                type={type}
                 title={title}
-                onClick={onClick}
+                onClick={handleClick}
+                disabled={disabled}
             >
                 {children}
             </ButtonContainer>
@@ -31,7 +39,11 @@ const Button = ({
     }
 
     return (
-        <ButtonLink to={to as string} title={title}>
+        <ButtonLink
+            to={to as string}
+            title={title}
+            onClick={onClick ? handleClick : undefined}
+        >
             {children}
         </ButtonLink>
     )
