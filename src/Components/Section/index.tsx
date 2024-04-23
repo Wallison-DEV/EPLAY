@@ -1,4 +1,4 @@
-import { Container, Title } from './styles'
+import * as S from './styles'
 
 export type SectionProps = {
     title: string
@@ -7,12 +7,12 @@ export type SectionProps = {
 }
 
 const Section = ({ title, background, children }: SectionProps) => (
-    <Container background={background}>
+    <S.Container background={background}>
         <div className="container">
-            <Title>{title}</Title>
+            <S.Title>{title}</S.Title>
             {children}
         </div>
-    </Container>
+    </S.Container>
 )
 
 export default Section
