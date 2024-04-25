@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 
 import { open } from '../../store/reducers/cart'
+import { RootReducer } from '../../store'
 
 import * as S from './styles'
+
 import logo from '../../assets/images/logo.svg'
 import cartIcon from '../../assets/images/carrinho.svg'
-import { RootReducer } from '../../store'
+
 
 const Header = () => {
     const dispatch = useDispatch()

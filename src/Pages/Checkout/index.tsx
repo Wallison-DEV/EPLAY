@@ -28,13 +28,9 @@ const Checkout = () => {
     const [payWithCard, setPayWithCard] = useState(false)
     const [purchase, { data, isSuccess, isLoading }] = usePurchaseMutation()
     const { items } = useSelector((state: RootReducer) => state.cart)
-    const [installments, setInstallments] = useState<Installment[]>()
+    const [installments, setInstallments] = useState<Installment[]>([])
     const dispatch = useDispatch()
 
-    const handlePaymentChange = (useCard: boolean) => {
-        setPayWithCard(useCard)
-        form.resetForm()
-    }
     const totalPrice = getTotalPrice(items)
 
     function parseValue(value: string): string {
@@ -81,7 +77,6 @@ const Checkout = () => {
             cpfCardOwner: Yup.string()
                 .transform((value) => parseValue(value))
                 .length(11, 'O CPF deve ter exatamente 11 dígitos')
-                .required('O campo é obrigatório')
                 .when((_values, schema) =>
                     payWithCard
                         ? schema.required('O campo é obrigatório')
@@ -93,7 +88,6 @@ const Checkout = () => {
             cardNumber: Yup.string()
                 .transform((value) => parseValue(value))
                 .length(16, 'O número do cartão deve ter exatamente 16 dígitos')
-                .required('O campo é obrigatório')
                 .when((_values, schema) =>
                     payWithCard
                         ? schema.required('O campo é obrigatório')
@@ -160,9 +154,12 @@ const Checkout = () => {
                 }
                 return installmentArray
             }
-            setInstallments(calculateInstallments())
+            if (totalPrice > 0) {
+                setInstallments(calculateInstallments())
+            }
         }
     }, [totalPrice])
+
     useEffect(() => {
         if (isSuccess) {
             dispatch(clear())
@@ -330,7 +327,7 @@ const Checkout = () => {
                         <>
                             <S.TabButton
                                 isactive={!payWithCard}
-                                onClick={() => handlePaymentChange(false)}
+                                onClick={() => setPayWithCard(false)}
                                 type="button"
                             >
                                 <img src={barCodeImg} alt="Boleto" />
@@ -338,7 +335,7 @@ const Checkout = () => {
                             </S.TabButton>
                             <S.TabButton
                                 isactive={payWithCard}
-                                onClick={() => handlePaymentChange(true)}
+                                onClick={() => setPayWithCard(true)}
                                 type="button"
                             >
                                 <img src={creditPng} alt="Cartão de crédito" />
@@ -571,6 +568,7 @@ const Checkout = () => {
                     </Card>
                     <Button
                         type="submit"
+                        onClick={form.handleSubmit}
                         disabled={isLoading}
                         title="Clique aqui para finalizar a compra"
                     >
